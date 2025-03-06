@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportSphere.API", "SportSphere.API\SportSphere.API.csproj", "{13C66755-4769-4373-B338-AAE9E02618A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportSphere.App", "SportSphere.App\SportSphere.App.csproj", "{78E497BB-2286-45CA-92EA-B4ADE7090AC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportSphere.Shared", "SportSphere.Shared\SportSphere.Shared.csproj", "{BCF6B402-F1C3-4C09-BD53-4C02A9FCA556}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13C66755-4769-4373-B338-AAE9E02618A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13C66755-4769-4373-B338-AAE9E02618A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13C66755-4769-4373-B338-AAE9E02618A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13C66755-4769-4373-B338-AAE9E02618A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78E497BB-2286-45CA-92EA-B4ADE7090AC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78E497BB-2286-45CA-92EA-B4ADE7090AC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78E497BB-2286-45CA-92EA-B4ADE7090AC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78E497BB-2286-45CA-92EA-B4ADE7090AC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCF6B402-F1C3-4C09-BD53-4C02A9FCA556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCF6B402-F1C3-4C09-BD53-4C02A9FCA556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCF6B402-F1C3-4C09-BD53-4C02A9FCA556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCF6B402-F1C3-4C09-BD53-4C02A9FCA556}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

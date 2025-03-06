@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:viewmodels="clr-namespace:SportSphere.App.ViewModels"
+             x:Class="SportSphere.App.Views.MapPage"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refresh" Command="{Binding RefreshCommand}" IconImageSource="refresh.png" />
+        <ToolbarItem Text="Create Event" Command="{Binding CreateEventCommand}" IconImageSource="add.png" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="*, Auto">
+        <ContentView Grid.Row="0" Content="{Binding Map}" />
+
+        <StackLayout Grid.Row="1" Padding="10" BackgroundColor="{DynamicResource Surface}">
+            <Label Text="Nearby Activities" FontSize="18" FontAttributes="Bold" Margin="0,0,0,10" />
+            
+            <CollectionView ItemsSource="{Binding NearbyEvents}" HeightRequest="150" Margin="0,0,0,10">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Label Text="No events found nearby" HorizontalOptions="Center" VerticalOptions="Center" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="10" Padding="10" WidthRequest="200" BackgroundColor="{DynamicResource Primary}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MapViewModel}}, Path=ViewEventDetailsCommand}" CommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout>
+                                <Label Text="{Binding Title}" FontAttributes="Bold" TextColor="White" />
+                                <Label Text="{Binding Sport.Name}" TextColor="White" />
+                                <Label Text="{Binding StartTime, StringFormat='{0:MMM dd, yyyy HH:mm}'}" TextColor="White" />
+                                <Label Text="{Binding CurrentParticipants, StringFormat='{0} participants'}" TextColor="White" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Nearby Venues" FontSize="18" FontAttributes="Bold" Margin="0,0,0,10" />
+            
+            <CollectionView ItemsSource="{Binding NearbyVenues}" HeightRequest="150">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Label Text="No venues found nearby" HorizontalOptions="Center" VerticalOptions="Center" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="10" Padding="10" WidthRequest="200" BackgroundColor="{DynamicResource Secondary}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MapViewModel}}, Path=ViewVenueDetailsCommand}" CommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout>
+                                <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="White" />
+                                <Label Text="{Binding Address}" TextColor="White" />
+                                <Label Text="{Binding Rating, StringFormat='Rating: {0:F1}'}" TextColor="White" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+
+        <ActivityIndicator Grid.RowSpan="2" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center" />
+    </Grid>
+</ContentPage> 

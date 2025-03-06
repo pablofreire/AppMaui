@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SportSphere.App.Views.EventsPage"
+             Title="Eventos">
+    <Grid RowDefinitions="Auto,*">
+        <HorizontalStackLayout Spacing="10" Padding="15" HorizontalOptions="Center">
+            <Button Text="Todos" Command="{Binding FilterEventsCommand}" CommandParameter="all" 
+                    BackgroundColor="{Binding AllFilterColor}" TextColor="White" />
+            <Button Text="Meus Eventos" Command="{Binding FilterEventsCommand}" CommandParameter="mine" 
+                    BackgroundColor="{Binding MineFilterColor}" TextColor="White" />
+            <Button Text="Participando" Command="{Binding FilterEventsCommand}" CommandParameter="participating" 
+                    BackgroundColor="{Binding ParticipatingFilterColor}" TextColor="White" />
+        </HorizontalStackLayout>
+        
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+            <CollectionView ItemsSource="{Binding Events}" 
+                            EmptyView="Nenhum evento encontrado"
+                            SelectionMode="Single"
+                            SelectionChangedCommand="{Binding EventSelectedCommand}"
+                            SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="15" Padding="0" CornerRadius="10" HasShadow="True">
+                            <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="0">
+                                <Image Grid.Row="0" Source="{Binding ImageUrl}" HeightRequest="150" Aspect="AspectFill" />
+                                
+                                <VerticalStackLayout Grid.Row="1" Padding="15" Spacing="5">
+                                    <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" />
+                                    <Label Text="{Binding Description}" MaxLines="2" LineBreakMode="TailTruncation" />
+                                    
+                                    <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,10,0,0">
+                                        <Image Source="{Binding Sport.IconUrl}" HeightRequest="30" WidthRequest="30" />
+                                        <Label Grid.Column="1" Text="{Binding Sport.Name}" VerticalOptions="Center" Margin="10,0,0,0" />
+                                        <Label Grid.Column="2" Text="{Binding Price, StringFormat='R$ {0:F2}'}" 
+                                               VerticalOptions="Center" HorizontalOptions="End" FontAttributes="Bold" />
+                                    </Grid>
+                                </VerticalStackLayout>
+                                
+                                <Grid Grid.Row="2" ColumnDefinitions="*,*,*" BackgroundColor="#f0f0f0" Padding="15,10">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                        <Label Text="Data" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding StartTime, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" />
+                                    </VerticalStackLayout>
+                                    
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                        <Label Text="Horário" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding StartTime, StringFormat='{0:HH:mm}'}" FontAttributes="Bold" />
+                                    </VerticalStackLayout>
+                                    
+                                    <VerticalStackLayout Grid.Column="2" Spacing="2">
+                                        <Label Text="Participantes" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding ParticipantsCount, StringFormat='{0}/{1}'}" 
+                                               FontAttributes="Bold" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        
+        <Button Grid.Row="1" Text="+" FontSize="24" 
+                WidthRequest="60" HeightRequest="60" CornerRadius="30"
+                HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20"
+                BackgroundColor="#512BD4" TextColor="White"
+                Command="{Binding CreateEventCommand}" />
+    </Grid>
+</ContentPage> 

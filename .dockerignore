@@ -1,0 +1,46 @@
+# Arquivos e diretórios do Git
+.git
+.gitignore
+.github
+
+# Diretórios de build
+**/bin/
+**/obj/
+**/out/
+
+# Arquivos de configuração de desenvolvimento
+**/.vs/
+**/.vscode/
+**/.idea/
+
+# Arquivos de ambiente local
+**/*.env
+**/*.user
+**/*.userosscache
+**/*.dbmdl
+**/*.jfm
+
+# Arquivos de log
+**/*.log
+
+# Arquivos temporários
+**/[Tt]emp/
+**/[Tt]mp/
+
+# Arquivos de teste
+**/[Tt]est[Rr]esult*/
+**/[Bb]uild[Ll]og.*
+
+# Arquivos Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Arquivos de documentação
+README.md
+LICENSE
+*.md
+
+# Outros
+.DS_Store
+Thumbs.db 

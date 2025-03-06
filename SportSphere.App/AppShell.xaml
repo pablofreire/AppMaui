@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SportSphere.App.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:SportSphere.App.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="SportSphere">
+
+    <!-- Rotas de Autenticação -->
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="login" />
+
+    <!-- Rotas Principais (Tab Bar) -->
+    <TabBar Route="main">
+        <Tab Title="Início" Icon="home_icon.png">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:MainPage}" />
+        </Tab>
+        
+        <Tab Title="Eventos" Icon="events_icon.png">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:EventsPage}" />
+        </Tab>
+        
+        <Tab Title="Locais" Icon="venues_icon.png">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:VenuesPage}" />
+        </Tab>
+        
+        <Tab Title="Perfil" Icon="profile_icon.png">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:ProfilePage}" />
+        </Tab>
+    </TabBar>
+
+    <!-- Rotas Adicionais -->
+    <ShellContent
+        Title="Registro"
+        ContentTemplate="{DataTemplate views:RegisterPage}"
+        Route="register" />
+
+</Shell>

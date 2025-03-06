@@ -1,0 +1,17 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+
+# Instalar ferramentas necessárias para MAUI
+RUN dotnet workload install maui
+
+WORKDIR /src
+COPY ["SportSphere.App/SportSphere.App.csproj", "SportSphere.App/"]
+COPY ["SportSphere.Shared/SportSphere.Shared.csproj", "SportSphere.Shared/"]
+RUN dotnet restore "SportSphere.App/SportSphere.App.csproj"
+COPY . .
+WORKDIR "/src/SportSphere.App"
+
+# Comando para construir o aplicativo MAUI
+# Nota: Este Dockerfile é principalmente para desenvolvimento
+# Para gerar aplicativos para plataformas específicas, você precisará
+# de configurações adicionais e possivelmente SDKs específicos da plataforma
+CMD ["dotnet", "build", "SportSphere.App.csproj"] 

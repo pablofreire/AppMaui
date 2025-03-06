@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SportSphere.App.Views.RegisterPage"
+             Title="Criar Conta">
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30" VerticalOptions="Center">
+            <Image Source="dotnet_bot.png" HeightRequest="150" HorizontalOptions="Center" />
+            
+            <Label Text="Criar uma nova conta" FontSize="28" TextColor="Gray" HorizontalOptions="Center" />
+            
+            <Entry Placeholder="Nome" Text="{Binding FirstName}" />
+            <Entry Placeholder="Sobrenome" Text="{Binding LastName}" />
+            <Entry Placeholder="Nome de usuário" Text="{Binding Username}" />
+            <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email" />
+            <Entry Placeholder="Senha" Text="{Binding Password}" IsPassword="True" />
+            <Entry Placeholder="Confirmar Senha" Text="{Binding ConfirmPassword}" IsPassword="True" />
+            
+            <Button Text="Registrar" Command="{Binding RegisterCommand}" 
+                    BackgroundColor="#512BD4" TextColor="White" />
+            
+            <Label Text="Já tem uma conta?" HorizontalOptions="Center" />
+            <Button Text="Fazer Login" Command="{Binding GoToLoginCommand}" 
+                    BackgroundColor="Transparent" TextColor="#512BD4" />
+            
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding HasError}" HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage> 

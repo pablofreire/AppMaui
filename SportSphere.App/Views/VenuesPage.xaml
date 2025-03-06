@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SportSphere.App.Views.VenuesPage"
+             Title="Locais">
+    <Grid RowDefinitions="Auto,*">
+        <SearchBar Grid.Row="0" Placeholder="Buscar locais..." 
+                   Text="{Binding SearchText}" 
+                   SearchCommand="{Binding SearchCommand}" />
+        
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+            <CollectionView ItemsSource="{Binding Venues}" 
+                            EmptyView="Nenhum local encontrado"
+                            SelectionMode="Single"
+                            SelectionChangedCommand="{Binding VenueSelectedCommand}"
+                            SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="15" Padding="0" CornerRadius="10" HasShadow="True">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="0">
+                                <Image Grid.Row="0" Source="{Binding PhotoUrl}" HeightRequest="150" Aspect="AspectFill" />
+                                
+                                <VerticalStackLayout Grid.Row="1" Padding="15" Spacing="5">
+                                    <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
+                                    <Label Text="{Binding Address}" MaxLines="2" LineBreakMode="TailTruncation" />
+                                    
+                                    <Grid ColumnDefinitions="*,Auto" Margin="0,10,0,0">
+                                        <HorizontalStackLayout Spacing="5">
+                                            <Label Text="{Binding Rating, StringFormat='{0:F1}'}" FontAttributes="Bold" />
+                                            <Label Text="★" TextColor="Gold" FontAttributes="Bold" />
+                                            <Label Text="{Binding ReviewCount, StringFormat='({0} avaliações)'}" TextColor="Gray" />
+                                        </HorizontalStackLayout>
+                                        
+                                        <Label Grid.Column="1" Text="{Binding PricePerHour, StringFormat='R$ {0:F2}/hora'}" 
+                                               HorizontalOptions="End" FontAttributes="Bold" />
+                                    </Grid>
+                                    
+                                    <CollectionView ItemsSource="{Binding OfferedSports}" 
+                                                    HeightRequest="40" 
+                                                    ItemsLayout="HorizontalList">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Image Source="{Binding IconUrl}" HeightRequest="30" WidthRequest="30" Margin="5" />
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                    
+                                    <Grid ColumnDefinitions="Auto,Auto,Auto" Margin="0,10,0,0">
+                                        <Label Grid.Column="0" Text="Estacionamento" IsVisible="{Binding HasParking}" 
+                                               TextColor="Green" Margin="0,0,10,0" />
+                                        <Label Grid.Column="1" Text="Chuveiros" IsVisible="{Binding HasShowers}" 
+                                               TextColor="Green" Margin="0,0,10,0" />
+                                        <Label Grid.Column="2" Text="Armários" IsVisible="{Binding HasLockers}" 
+                                               TextColor="Green" />
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage> 

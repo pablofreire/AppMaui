@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${API_PORT:-5000}:8080"
+      - "${API_SSL_PORT:-5001}:443"
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=SportSphere;User Id=sa;Password=${DB_PASSWORD:-YourStrong@Passw0rd};TrustServerCertificate=True;
+      - DB_PASSWORD=${DB_PASSWORD:-YourStrong@Passw0rd}
+    volumes:
+      - ./init-db.sh:/app/init-db.sh
+      - ./SportSphere.API/bin/Debug/net9.0/publish:/app
+    command: /bin/bash -c "chmod +x /app/init-db.sh && /app/init-db.sh && dotnet SportSphere.API.dll"
+    networks:
+      - sportsphere-network
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${DB_PASSWORD:-YourStrong@Passw0rd}
+    ports:
+      - "${DB_PORT:-1433}:1433"
+    volumes:
+      - sportsphere-data:/var/opt/mssql
+    networks:
+      - sportsphere-network
+
+volumes:
+  sportsphere-data:
+
+networks:
+  sportsphere-network:
+    driver: bridge 

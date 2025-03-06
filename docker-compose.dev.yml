@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${API_PORT:-5000}:80"
+      - "${API_SSL_PORT:-5001}:443"
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=SportSphere;User=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;
+      - JwtSettings__Key=${JWT_SECRET}
+      - JwtSettings__Issuer=${JWT_ISSUER}
+      - JwtSettings__Audience=${JWT_AUDIENCE}
+      - JwtSettings__DurationInMinutes=${JWT_DURATION_MINUTES}
+    networks:
+      - sportsphere-network
+    volumes:
+      - ./SportSphere.API:/app/SportSphere.API
+      - ./SportSphere.Shared:/app/SportSphere.Shared
+    restart: always
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${DB_PASSWORD}
+      - MSSQL_PID=Express
+    volumes:
+      - sportsphere-data:/var/opt/mssql
+      - ./init-sample-data.sql:/scripts/init-sample-data.sql
+    networks:
+      - sportsphere-network
+    restart: always
+    command: >
+      bash -c "
+        /opt/mssql/bin/sqlservr &
+        sleep 30s &&
+        /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${DB_PASSWORD} -i /scripts/init-sample-data.sql &&
+        tail -f /dev/null
+      "
+
+networks:
+  sportsphere-network:
+    driver: bridge
+
+volumes:
+  sportsphere-data: 

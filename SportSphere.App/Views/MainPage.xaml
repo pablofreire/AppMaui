@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SportSphere.App.ViewModels"
+             x:Class="SportSphere.App.Views.MainPage"
+             x:DataType="viewmodels:MainViewModel"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Cabeçalho -->
+        <Grid Grid.Row="0" 
+              ColumnDefinitions="*,Auto"
+              Padding="20,10">
+            
+            <Label Text="Bem-vindo ao SportSphere!"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   TextColor="{StaticResource Primary}" />
+            
+            <Image Grid.Column="1"
+                   Source="profile_icon.png"
+                   HeightRequest="40"
+                   WidthRequest="40">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToProfileCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+        </Grid>
+
+        <!-- Conteúdo Principal -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="25" Padding="20">
+                
+                <!-- Seção de Esportes Populares -->
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Esportes Populares"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Primary}" />
+                    
+                    <CollectionView ItemsSource="{Binding PopularSports}"
+                                    HeightRequest="120"
+                                    SelectionMode="Single"
+                                    SelectionChangedCommand="{Binding SportSelectedCommand}"
+                                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="15" />
+                        </CollectionView.ItemsLayout>
+                        
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="Nenhum esporte encontrado"
+                                       TextColor="Gray"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border StrokeShape="RoundRectangle 10"
+                                        BackgroundColor="{StaticResource Gray200}"
+                                        WidthRequest="100">
+                                    <Grid RowDefinitions="*,Auto" Padding="10">
+                                        <Image Grid.Row="0"
+                                               Source="{Binding IconUrl}"
+                                               HeightRequest="50"
+                                               WidthRequest="50"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center" />
+                                        
+                                        <Label Grid.Row="1"
+                                               Text="{Binding Name}"
+                                               FontSize="14"
+                                               HorizontalOptions="Center"
+                                               MaxLines="1"
+                                               LineBreakMode="TailTruncation" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- Seção de Eventos Próximos -->
+                <VerticalStackLayout Spacing="15">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Eventos Próximos"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource Primary}" />
+                        
+                        <Label Grid.Column="1"
+                               Text="Ver Todos"
+                               TextColor="{StaticResource Secondary}"
+                               VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToEventsCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                    
+                    <CollectionView ItemsSource="{Binding UpcomingEvents}"
+                                    HeightRequest="200"
+                                    SelectionMode="Single"
+                                    SelectionChangedCommand="{Binding EventSelectedCommand}"
+                                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="15" />
+                        </CollectionView.ItemsLayout>
+                        
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="Nenhum evento próximo"
+                                       TextColor="Gray"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border StrokeShape="RoundRectangle 10"
+                                        BackgroundColor="{StaticResource Gray200}"
+                                        WidthRequest="250">
+                                    <Grid RowDefinitions="Auto,Auto,Auto" Padding="15">
+                                        <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+                                            <Image Source="{Binding Sport.IconUrl}"
+                                                   HeightRequest="30"
+                                                   WidthRequest="30" />
+                                            
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding Title}"
+                                                   FontSize="16"
+                                                   FontAttributes="Bold"
+                                                   MaxLines="1"
+                                                   LineBreakMode="TailTruncation"
+                                                   VerticalOptions="Center"
+                                                   Margin="10,0,0,0" />
+                                        </Grid>
+                                        
+                                        <Label Grid.Row="1"
+                                               Text="{Binding Description}"
+                                               FontSize="14"
+                                               MaxLines="2"
+                                               LineBreakMode="TailTruncation"
+                                               Margin="0,10,0,0" />
+                                        
+                                        <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto" Margin="0,10,0,0">
+                                            <Image Source="calendar_icon.png"
+                                                   HeightRequest="20"
+                                                   WidthRequest="20" />
+                                            
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding StartTime, StringFormat='{0:dd/MM/yyyy HH:mm}'}"
+                                                   FontSize="14"
+                                                   VerticalOptions="Center"
+                                                   Margin="5,0,0,0" />
+                                            
+                                            <Label Grid.Column="2"
+                                                   Text="{Binding Participants.Count, StringFormat='{0} participantes'}"
+                                                   FontSize="12"
+                                                   TextColor="{StaticResource Secondary}"
+                                                   VerticalOptions="Center" />
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- Seção de Locais Populares -->
+                <VerticalStackLayout Spacing="15">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Locais Populares"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource Primary}" />
+                        
+                        <Label Grid.Column="1"
+                               Text="Ver Todos"
+                               TextColor="{StaticResource Secondary}"
+                               VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToVenuesCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                    
+                    <CollectionView ItemsSource="{Binding PopularVenues}"
+                                    HeightRequest="180"
+                                    SelectionMode="Single"
+                                    SelectionChangedCommand="{Binding VenueSelectedCommand}"
+                                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="15" />
+                        </CollectionView.ItemsLayout>
+                        
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="Nenhum local encontrado"
+                                       TextColor="Gray"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border StrokeShape="RoundRectangle 10"
+                                        BackgroundColor="{StaticResource Gray200}"
+                                        WidthRequest="200">
+                                    <Grid RowDefinitions="Auto,Auto,Auto" Padding="15">
+                                        <Label Grid.Row="0"
+                                               Text="{Binding Name}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               MaxLines="1"
+                                               LineBreakMode="TailTruncation" />
+                                        
+                                        <Label Grid.Row="1"
+                                               Text="{Binding Address}"
+                                               FontSize="14"
+                                               MaxLines="2"
+                                               LineBreakMode="TailTruncation"
+                                               Margin="0,5,0,0" />
+                                        
+                                        <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto" Margin="0,10,0,0">
+                                            <Image Source="star_icon.png"
+                                                   HeightRequest="20"
+                                                   WidthRequest="20" />
+                                            
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding Rating, StringFormat='{0:F1}'}"
+                                                   FontSize="14"
+                                                   VerticalOptions="Center"
+                                                   Margin="5,0,0,0" />
+                                            
+                                            <Label Grid.Column="2"
+                                                   Text="{Binding PricePerHour, StringFormat='R$ {0:F2}/h'}"
+                                                   FontSize="14"
+                                                   TextColor="{StaticResource Primary}"
+                                                   FontAttributes="Bold"
+                                                   VerticalOptions="Center" />
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage> 
